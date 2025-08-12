@@ -1,0 +1,21 @@
+---
+substitutions:
+  _IMAGE_NAME: astral-sh/uv
+  _IMAGE_TAG: python3.12-bookworm
+  _REPOSITORY: ghcr.io
+
+steps:
+  - name: '${_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
+    timeout: 300s
+    entrypoint: /bin/bash
+    args:
+    - '-c'
+    - |
+      make clean
+      make install
+      make pre-commit
+      make test
+      make build
+
+options:
+  logging: CLOUD_LOGGING_ONLY
