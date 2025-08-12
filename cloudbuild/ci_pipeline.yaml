@@ -12,6 +12,7 @@ steps:
     - '-c'
     - |
       make clean
+      make install
       make pre-commit
       make test
       make build
