@@ -10,6 +10,7 @@ help:
 	@echo ''
 	@echo '    build      Build the package'
 	@echo '    clean      Remove build and test files'
+	@echo '    install    Install requirements in the environment'
 	@echo '    pre-commit Run pre-commit checks'
 	@echo '    test       Run unit tests'
 	@echo ''
@@ -23,6 +24,11 @@ build:
 .PHONY: clean
 clean:
 	@rm -rf dist
+
+
+.PHONY: install
+install:
+	@uv sync
 
 
 .PHONY: pre-commit
