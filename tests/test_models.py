@@ -10,4 +10,8 @@ def test_get_models(genai_client) -> None:
     models = get_models(client=genai_client,
                         query_base=True)
 
-    assert models
+    assert bool(models)
+    assert isinstance(models, list)
+
+    for name in models:
+        assert isinstance(name, str)
