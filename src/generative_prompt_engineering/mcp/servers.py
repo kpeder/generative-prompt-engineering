@@ -32,7 +32,7 @@ def get_mcp_server(name: str) -> FastMCP:
 
     except Exception as e:
         logger.exception(e)
-        flush_logs(logger=logger)
+        flush_logs()
 
 
 def start_mcp_server(mcp: FastMCP, transport: Literal['stdio', 'sse', 'streamable-http'] = "stdio") -> None:
@@ -56,4 +56,4 @@ def start_mcp_server(mcp: FastMCP, transport: Literal['stdio', 'sse', 'streamabl
 
     except Exception as e:
         logger.exception(e)
-        flush_logs(logger=logger)
+        flush_logs()

@@ -1,3 +1,5 @@
+from generative_prompt_engineering import flush_logs
+
 from google.genai import Client
 
 import logging
@@ -34,5 +36,6 @@ def get_models(client: Client,
 
     except Exception as e:
         logger.exception(e)
+        flush_logs()
 
     return models

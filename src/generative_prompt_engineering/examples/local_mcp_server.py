@@ -15,7 +15,7 @@ try:
 
 except Exception as e:
     logger.exception('Failed to create MCP server with exception {}.'.format(e))
-    flush_logs(logger=logger)
+    flush_logs()
 
 
 @mcp.tool(description='Returns the fibonacci sequence as a list of integers.')
@@ -32,4 +32,4 @@ try:
 
 except Exception as e:
     logger.exception('Failed to start MCP server with exception {}.'.format(e))
-    flush_logs(logger=logger)
+    flush_logs()

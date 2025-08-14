@@ -42,10 +42,10 @@ def _get_root_logger(handlers: list[logging.Handler] | None = None,
         raise e
 
 
-def flush_logs(logger: logging.Logger) -> None:
+def flush_logs(logger: logging.Logger = logging.getLogger(PACKAGE_NAME)) -> None:
 
     '''
-    Given a logger, flush the logs on each handler.
+    Given a logger, flush the logs on each handler. Defaults to the package root logger.
 
     Args:
         logger (logging.Logger): An initialized Python Logger.
@@ -175,7 +175,7 @@ def initialize_package(handlers: list[logging.Handler] = []) -> None:
 
     except Exception as e:
         logger.exception(e)
-        flush_logs(logger=logger)
+        flush_logs()
         raise e
 
 
