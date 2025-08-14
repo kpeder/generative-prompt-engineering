@@ -42,6 +42,29 @@ def _get_root_logger(handlers: list[logging.Handler] | None = None,
         raise e
 
 
+def flush_logs(logger: logging.Logger = logging.getLogger(PACKAGE_NAME)) -> None:
+
+    '''
+    Given a logger, flush the logs on each handler. Defaults to the package root logger.
+
+    Args:
+        logger (logging.Logger): An initialized Python Logger.
+
+    Returns:
+        None
+
+    Raises:
+        e (Exception): Any unhandled exception.
+    '''
+
+    try:
+        for handler in logger.handlers:
+            handler.flush()
+
+    except Exception as e:
+        raise e
+
+
 def get_cloud_logging_handler(formatter: logging.Formatter = logging.Formatter(fmt='%(name)s: %(levelname)s: %(message)s', datefmt='%(asctime)s'),
                               log_name: str = 'prompt_engineering_experiments') -> logging.Handler:
 
@@ -148,13 +171,11 @@ def initialize_package(handlers: list[logging.Handler] = []) -> None:
 
     try:
         version = get_package_version(package_name=PACKAGE_NAME)
-
         logger.info('Package {} version {}.'.format(PACKAGE_NAME, version))
-        for handler in logger.handlers:
-            handler.flush()
 
     except Exception as e:
         logger.exception(e)
+        flush_logs()
         raise e
 
 
