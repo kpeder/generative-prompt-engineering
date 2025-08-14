@@ -17,14 +17,16 @@ except Exception as e:
     logger.exception('Failed to create MCP server with exception {}.'.format(e))
     flush_logs()
 
-
-@mcp.tool(description='Returns the fibonacci sequence as a list of integers.')
-def get_fibonnaci_sequence(n: int = 13):
-    '''
-    Wrapped tool function for MCP server registration.
-    '''
-    return fibonacci_sequence(n=n)
-
+try:
+    @mcp.tool(description='Returns the fibonacci sequence as a list of integers.')
+    def get_fibonnaci_sequence(n: int = 13):
+        '''
+        Wrapped tool function for MCP server registration.
+        '''
+        return fibonacci_sequence(n=n)
+except Exception as e:
+    logger.exception('Failed to register tool with MCP server with exception {}.'.format(e))
+    flush_logs()
 
 ''' Start the local MCP server with STDIO transport.'''
 try:
