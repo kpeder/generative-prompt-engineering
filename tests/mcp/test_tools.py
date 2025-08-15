@@ -4,7 +4,7 @@ from generative_prompt_engineering.mcp.tools import fibonacci_sequence
 def test_tools() -> None:
 
     '''
-    Test get_models() function.
+    Test fibonacci_sequence() function.
     '''
 
     result = fibonacci_sequence(n=0)
