@@ -1,10 +1,12 @@
 from generative_prompt_engineering import flush_logs
+from generative_prompt_engineering.mcp.prompts import fibannaci_prompt
+from generative_prompt_engineering.mcp.resources import package_info
 from generative_prompt_engineering.mcp.servers import get_mcp_server, start_mcp_server
 from generative_prompt_engineering.mcp.tools import fibonacci_sequence
-from generative_prompt_engineering.mcp.resources import package_info
 
 import json
 import logging
+
 
 logging.getLogger('generative_prompt_engineering').propagate = False  # the buck stops at package root; MCP does dumb stuff to the root logger
 
@@ -12,7 +14,7 @@ logger = logging.getLogger('generative_prompt_engineering.examples.local_mcp_ser
 
 SERVER_NAME = 'mcp_local'
 
-''' Get a local MCP server and register a tool, a resource and a prompt.'''
+''' Get a local MCP server and register a prompt, a resource, and a tool.'''
 try:
     mcp = get_mcp_server(name=SERVER_NAME)
 
@@ -21,17 +23,17 @@ except Exception as e:
     flush_logs()
 
 try:
-    @mcp.tool(description='Returns the fibonacci sequence as a list of integers.')
-    def get_fibonnaci_sequence(n: int = 13):
+    @mcp.prompt(description='Returns the package information and fibonacci sequence in JSON format.')
+    def get_fibonacci_prompt():
         '''
-        Wrapped tool function for MCP server registration.
+        Wrapped resource for MCP server registration.
         '''
-        return fibonacci_sequence(n=n)
+        return fibannaci_prompt()
 
-    logger.info('Registered tool {} with MCP server instance {}.'.format(list(mcp._tool_manager._tools.values())[0].name, mcp.name))
+    logger.info('Registered prompt {} with MCP server instance {}.'.format(list(mcp._prompt_manager._prompts.values())[0].name, mcp.name))
 
 except Exception as e:
-    logger.exception('Failed to register tool with MCP server with exception {}.'.format(e))
+    logger.exception('Failed to register resource with MCP server with exception {}.'.format(e))
     flush_logs()
 
 try:
@@ -47,6 +49,20 @@ try:
 
 except Exception as e:
     logger.exception('Failed to register resource with MCP server with exception {}.'.format(e))
+    flush_logs()
+
+try:
+    @mcp.tool(description='Returns the fibonacci sequence as a list of integers.')
+    def get_fibonnaci_sequence(n: int = 13):
+        '''
+        Wrapped tool function for MCP server registration.
+        '''
+        return fibonacci_sequence(n=n)
+
+    logger.info('Registered tool {} with MCP server instance {}.'.format(list(mcp._tool_manager._tools.values())[0].name, mcp.name))
+
+except Exception as e:
+    logger.exception('Failed to register tool with MCP server with exception {}.'.format(e))
     flush_logs()
 
 ''' Start the local MCP server with STDIO transport.'''
