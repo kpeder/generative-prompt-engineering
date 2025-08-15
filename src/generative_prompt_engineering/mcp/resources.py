@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def package_info() -> json:
+def package_info() -> str:
 
     '''
     Return the package name and version in JSON format.
